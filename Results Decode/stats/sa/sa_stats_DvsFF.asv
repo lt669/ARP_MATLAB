@@ -26,7 +26,6 @@ D(19:38,4:7,:) = nan;
 % Check the variance between groups
 v_D = squeeze(var(D(:,:,1)));
 
-% Confirm that not all data is normally distributed
 for i = 1:4
     v_Dall(i) = vartestn(D(:,:,i),'Display','off');
     v_FFall(i) = vartestn(FF(:,:,i),'Display','off');
@@ -38,7 +37,25 @@ for i = 1:4
     end
 end
 
-for i = 1:4
-    [kw(1,i),~,stats_D(i)] = kruskalwallis(D(:,:,i),[],'off');
-    [kw(2,i),~,stats_F(i)] = kruskalwallis(FF(:,:,i),[],'off');
-end
+fit = 'kernel';
+close all
+h1 = histfit(ad_D(:,:,2),[],fit);
+hold on
+h2 = histfit(ad_D(:,2,2),[],fit);
+h3 = histfit(ad_D(:,3,2),[],fit);
+h4 = histfit(ad_D(:,4,2),[],fit);
+h5 = histfit(ad_D(:,5,2),[],fit);
+h6 = histfit(ad_D(:,6,2),[],fit);
+h7 = histfit(ad_D(:,7,2),[],fit);
+
+xlabel('Spatial Attribute Score');
+ylabel('No. of Participants Answered');
+title('Distribution of SA scores per microphone');
+
+set(h1(2),'color','r','linestyle',':'); delete(h1(1));
+set(h2(2),'color','g','linestyle','--'); delete(h2(1));
+set(h3(2),'color','b'); delete(h3(1));
+set(h4(2),'color','k'); delete(h4(1));
+set(h5(2),'color','m'); delete(h5(1));
+set(h6(2),'color','k','linestyle','-.'); delete(h6(1));
+set(h7(2),'color','c'); delete(h7(1));

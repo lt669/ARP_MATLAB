@@ -21,24 +21,33 @@ FF(19:38,5:8,:) = nan;
 %P  = cell2mat(hash_xlRaw_Re(:,1:4,1:4));
 D(:,1:3,:) = cell2mat(sortedArray_Re(:,5:7,2:5));
 D(1:19,4:7,:) = cell2mat(hash_xlRaw_Re(:,5:8,1:4));
-D(19:38,4:7,:) = nan;
+D(20:38,4:7,:) = nan;
+
+% Average all FF and D results for direct comparison
+D_av(1:19,:) = squeeze(sum(D(1:19,:,:),2)/7);
+D_av(20:38,:) = squeeze(sum(D(20:38,1:3,:),2)/3);
+
+FF_av(1:19,:) = squeeze(sum(FF(1:19,:,:),2)/8);
+FF_av(20:38,:) = squeeze(sum(FF(20:38,1:4,:),2)/4);
+
 
 % Check the variance between groups
 v_D = squeeze(var(D(:,:,1)));
 
 % Confirm that not all data is normally distributed
 for i = 1:4
-    v_Dall(i) = vartestn(D(:,:,i),'Display','off');
-    v_FFall(i) = vartestn(FF(:,:,i),'Display','off');
-    for mic = 1:7
-        ad_D(mic,i) = adtest(D(:,mic,i));
-    end
-    for mic = 1:8
-        ad_FF(mic,i) = adtest(FF(:,mic,i));
-    end
+    v_Dall(i) = vartestn(D_av(:,i),'Display','off');
+    v_FFall(i) = vartestn(FF_av(:,i),'Display','off');
+
+    ad_D(i) = adtest(D(:,i));
+    ad_FF(i) = adtest(FF(:,i));
+
 end
 
 for i = 1:4
-    [kw(1,i),~,stats_D(i)] = kruskalwallis(D(:,:,i),[],'off');
-    [kw(2,i),~,stats_F(i)] = kruskalwallis(FF(:,:,i),[],'off');
+    [kw_D(1,i),~,stats_D(i)] = kruskalwallis(D_av(:,i),[],'off');
+    [kw_FF(1,i),~,stats_F(i)] = kruskalwallis(FF_av(:,i),[],'off');
 end
+
+% run KW on mic in D and in FF and then comapre them all against each other
+%

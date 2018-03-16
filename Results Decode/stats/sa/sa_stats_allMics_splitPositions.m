@@ -72,7 +72,7 @@ h7 = histfit(x1(:,7,2),[],fit);
 
 xlabel('Spatial Attribute Score');
 ylabel('No. of Participants Answered');
-title('Distribution of SA scores per microphone');
+title('Distribution of Sense of Space scores per microphone');
 
 set(h1(2),'color','r','linestyle',':'); delete(h1(1));
 set(h2(2),'color','g','linestyle','--'); delete(h2(1));

@@ -1,7 +1,8 @@
-% sa_stats_DvsFF
 
-% Using a K-W test to analyse the difference between Diffuse and Free-Field
-% microphone arrays
+%{
+ sa_stats_DvsFF_V2: Using a K-W test to analyse the difference between all Diffuse and Free-Field
+ microphone arrays AVERAGED
+%}
 
 % Rearrange the order of hash_xlRaw matrix
 hash_xlRaw_Re = permute(hash_xlRaw,[3 1 2]); %[par,mic,q]
@@ -16,7 +17,7 @@ D = zeros(38,7,4);
 
 FF(:,1:4,:) = cell2mat(sortedArray_Re(:,1:4,2:5));
 FF(1:19,5:8,:) = cell2mat(hash_xlRaw_Re(:,1:4,1:4));
-FF(19:38,5:8,:) = nan;
+FF(20:38,5:8,:) = nan;
 
 %P  = cell2mat(hash_xlRaw_Re(:,1:4,1:4));
 D(:,1:3,:) = cell2mat(sortedArray_Re(:,5:7,2:5));
@@ -44,9 +45,20 @@ for i = 1:4
 
 end
 
+% Create seperate vectors for comparison
+for i = 1:4
+    comp(:,1,i) = FF_av(:,i);
+    comp(:,2,i) = D_av(:,i);
+end
+
+
 for i = 1:4
     [kw_D(1,i),~,stats_D(i)] = kruskalwallis(D_av(:,i),[],'off');
     [kw_FF(1,i),~,stats_F(i)] = kruskalwallis(FF_av(:,i),[],'off');
+    
+    [kw(i),~,stats_DvF(i)] = kruskalwallis(comp(:,:,i),[],'off');
+    
+    multcompare()
 end
 
 % run KW on mic in D and in FF and then comapre them all against each other

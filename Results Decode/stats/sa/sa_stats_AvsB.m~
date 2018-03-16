@@ -29,11 +29,8 @@ end
 [h,p,ci,stats] = ttest2(A_q',B_q');
 [h_s,p_s] = ttest2(A_q(3,:),B_q(3,:),'vartype','unequal');
 
-% Look into A vs B with avereaged question scores?
-AvB(1:19,1) = A_p;
-AvB(20:38) = nan;
-AvB(1:38,2) = B_p;
-
+AvB(:,1) = A_p;
+AvB(:,2) = B_p;
 
 %%
 % Plot distribution

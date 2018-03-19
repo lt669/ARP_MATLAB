@@ -29,8 +29,8 @@ for i = 1:4
     % Load Att results into array for sorting
     sorted_Att(1:7,2,i) = spatialAttAvg(:,i);
     sorted_Att(8:15,2,i) = hash_spatAttAvg(:,i);
-    sorted_Att(1:7,3,i) = timbreResults(:,ta);
-    sorted_Att(8:15,3,i) = timbreResults_H(:,ta);
+    sorted_Att(1:7,3,i,1:4) = timbreResults(:,ta);
+    sorted_Att(8:15,3,i,1:4) = timbreResults_H(:,ta);
     % Sort
     sorted_Att_2(:,:,i) = sortrows(sorted_Att(:,:,i),2,'descend');
 end

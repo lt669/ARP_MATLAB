@@ -48,6 +48,8 @@ for i = 1:4
     set(eval(sprintf('h%i',i)),'FaceColor','r');
     set(eval(sprintf('hh%i',i)),'FaceColor','b');
 end
+
+
 % Plot correlation
 % limit data between 0 - 1
 a = squeeze(sorted_Att_2(:,2,:));
@@ -55,7 +57,7 @@ b = squeeze(sorted_Att_2(:,3,:));
 limData(:,1,:) = sorted_Att_2(:,1,:);
 limData(:,2,:) = a./max(a);
 limData(:,3,:) = b./max(b);
-
+figure
 
 
 for i = 1:4
@@ -74,9 +76,17 @@ for i = 1:4
     % Create vector with linearly distributed points
     fittedX(i,:) = linspace(min(x),max(x),200);
     % Get Y values of polynomial at value X (spatialAtt)
-    fittedY(i) = polyval(coeffs,fittedX(i,:));
+    fittedY(i,:) = polyval(coeffs,fittedX(i,:));
     
+    t = i;
+    subplot(4,1,1), plot(fittedX(t,:),fittedY(t,:));
+    hold on
+    subplot(4,1,1), plot(fittedX(t,:),fittedY(t,:));
 end
+grid on
+legend('Loc','SoS','Ext','Env');
+%%
 clf;
-plot(fittedX,fittedY,'r-');
+t = 4;
+plot(fittedX(t,:),fittedY(t,:),'r-');
 

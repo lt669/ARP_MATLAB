@@ -1,7 +1,9 @@
 % sortedArray(mic,Par,9)
 %| Calculate average enjoyment rating across participants
 for mic = 1:7
-    e(mic) = sum(cell2mat(sortedArray(mic,:,9)))/noOfPar;
+    a = cell2mat(sortedArray(mic,:,9));
+    a(isnan(a)) = [];
+    e(mic) = sum(a)/length(a);
 end
 
 x = spatialAttAvgMic;

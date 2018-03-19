@@ -16,10 +16,26 @@ for mic = 3:2:8
     index = index + 1;
 end
 
+% Calculate differences between shared mics (+ A higher, - B higher)
+index = 1;
+for i = 1:2:8
+    diff(index,:) = ta_AB(i,:) - ta_AB(i+1,:);
+    for x = 1:6
+        diff_ratio(index,x) = ta_AB(i,x)/ta_AB(i+1,x);
+        diff_ratio_inv(index,x) = ta_AB(i+1,x)/ta_AB(i,x);
+    end
+    index = index + 1;
+end
+
+% Average difference
+diff_av = sum(abs(diff),1)/4;
+diff_av_sway = sum(diff,1)/4;
+
+
 x = gcf;
 b = bar(ta_AB');
 %applyhatch_plusC(x,'/-x.\+','rkbkmk',[],500);
-
+a = 1;
 set(b,'FaceColor',[a a a]);
 title(sprintf('Timbral Attributes Assigned to Each Microphone Configuration as A Percentage of Participants'));
 name = {'Full','Bright','Flat','Rich', 'Realistic', 'Loud'};

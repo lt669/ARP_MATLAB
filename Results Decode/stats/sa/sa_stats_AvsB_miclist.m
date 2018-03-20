@@ -37,7 +37,7 @@ hold on
 h2 = histfit(Bmiclist,[],fit);
 xlabel('Spatial Attribute Score');
 ylabel('No. of Participants Answered');
-title(sprintf('Distribution of SA scores for Pos B microphones SA:'));
+title(sprintf('Distribution of SA scores List of microphones at A and B'));
 
 set(h1(2),'color','r'); delete(h1(1));
 set(h2(2),'color','g'); delete(h2(1));

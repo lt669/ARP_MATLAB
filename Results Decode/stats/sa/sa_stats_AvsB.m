@@ -4,26 +4,26 @@
 
 % All data
 A_u = cell2mat(hash_xlRaw(:,3:6,2:20));
-
-
-
 A = squeeze(sum(cell2mat(hash_xlRaw(:,3:6,2:20)),2)/4);
 A_q = squeeze(sum(cell2mat(hash_xlRaw(:,3:6,2:20)),1)/8);
-A_q_av = squeeze(sum(A_q,2)/19);
 % Participants
 A_p = sum(A,1)/8;
 
-% Position B (participants per mic)
 
+
+% Position B (participants per mic)
 % All data
 B_u = permute(cell2mat(sortedArray(:,:,2:5)),[1 3 2]);
-
 B = squeeze(sum(cell2mat(sortedArray(:,:,2:5)),3)/4);
 B_q = squeeze(sum(cell2mat(sortedArray(:,:,2:5)),1)/7);
 B_q = B_q';
-B_q_av = squeeze(sum(B_q,2)/29);
 % Participants
 B_p = squeeze(sum(B,1)/7);
+
+
+% Stack SA question on top of each other to creat two vectors for comparison
+A_q_av = squeeze(sum(A_q,2)/19);
+B_q_av = squeeze(sum(B_q,2)/29);
 
 % Test the variance
 vA = var(A_q');
@@ -44,10 +44,6 @@ end
 % Run ANOVA for A vs B across all questions
 [h_av,p_av,ci,stats] = ttest2(A_q_av,B_q_av);
 
-% Try stacking participant results on top of each other instead of averaging
-
-
-
 % Look into A vs B with avereaged question scores?
 AvB(1:19,1) = A_p;
 AvB(20:38) = nan;
@@ -60,6 +56,7 @@ fit = 'normal';
 h1 = histfit(A_q_av,[],fit);
 hold on
 h2 = histfit(B_q_av,[],fit);
+title('Distribution of SA questions results avereaged across mic and participant');
 
 %% Plot distribution for each question
 close all

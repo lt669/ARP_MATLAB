@@ -49,7 +49,7 @@ for i = 1:4
     set(eval(sprintf('hh%i',i)),'FaceColor','b');
 end
 
-
+%%
 % Plot correlation
 % limit data between 0 - 1
 a = squeeze(sorted_Att_2(:,2,:));

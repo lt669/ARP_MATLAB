@@ -23,68 +23,108 @@ ta = 5; % [Full Bright Flat Rich Realistic Loud]
 
 [sTitle,tTitle] = getAttributes(sa,ta);
  
-sorted_Att = zeros(15,3,4); %[index SA TA]
+saUnsorted = zeros(15,2,4);
+taUnsorted = zeros(15,2,6);
+
+
+saUnsorted(1:7,2,:) = spatialAttAvg(:,:);
+saUnsorted(8:15,2,:) = hash_spatAttAvg(:,:);
 for i = 1:4
-    sorted_Att(:,1,i) = 1:15;
-    % Load Att results into array for sorting
-    sorted_Att(1:7,2,i) = spatialAttAvg(:,i);
-    sorted_Att(8:15,2,i) = hash_spatAttAvg(:,i);
-    sorted_Att(1:7,3,i,1:4) = timbreResults(:,ta);
-    sorted_Att(8:15,3,i,1:4) = timbreResults_H(:,ta);
-    % Sort
-    sorted_Att_2(:,:,i) = sortrows(sorted_Att(:,:,i),2,'descend');
+    saUnsorted(:,1,i) = 1:15;
+    saSort(:,:,i) = sortrows(saUnsorted(:,:,i),2,'descend');
 end
 
-% Subplotting
-subplot(4,1,1),[ax,h1,hh1] = plotyy([0.75:1:14.75],sorted_Att_2(:,2,1),[1.25:1:15.25],sorted_Att_2(:,3,1),'bar','bar');
-title(strcat('Localisation - ',tTitle));
-subplot(4,1,2),[ax,h2,hh2] = plotyy([0.75:1:14.75],sorted_Att_2(:,2,2),[1.25:1:15.25],sorted_Att_2(:,3,2),'bar','bar');
-title(strcat('Sense Of Space - ',tTitle));
-subplot(4,1,3),[ax,h3,hh3] = plotyy([0.75:1:14.75],sorted_Att_2(:,2,3),[1.25:1:15.25],sorted_Att_2(:,3,3),'bar','bar');
-title(strcat('Externalisation - ',tTitle));
-subplot(4,1,4),[ax,h4,hh4] = plotyy([0.75:1:14.75],sorted_Att_2(:,2,4),[1.25:1:15.25],sorted_Att_2(:,3,4),'bar','bar');
-title(strcat('Envelopment - ',tTitle));
-for i = 1:4
-    set(eval(sprintf('h%i',i)),'FaceColor','r');
-    set(eval(sprintf('hh%i',i)),'FaceColor','b');
+taUnsorted(1:7,2,:) = timbreResults(:,:);
+taUnsorted(8:15,2,:) = timbreResults_H(:,:);
+for i = 1:6
+    taUnsorted(:,1,i) = 1:15;
 end
-
-
+%%
 % Plot correlation
 % limit data between 0 - 1
-a = squeeze(sorted_Att_2(:,2,:));
-b = squeeze(sorted_Att_2(:,3,:));
-limData(:,1,:) = sorted_Att_2(:,1,:);
-limData(:,2,:) = a./max(a);
-limData(:,3,:) = b./max(b);
-figure
-
+%a = squeeze(saSort(:,2,:));
+a = squeeze(saUnsorted(:,2,:));
+b(:,1:6) = squeeze(taUnsorted(:,2,1:6));
+clc;
+clf;
+titles = {'Locatedness','Sense of Space','Externalisation','Envelopment'};
+colors = {'r','b','k','c','m'};
+markers = {'o','x', '*'};
+legIndex = 1; % Used for variable sized legend (added legend for plotting extra data
+cIndex = 1;
 
 for i = 1:4
-    % Use Function
-    [rFun(:,:,i),p(:,:,i)] = corrcoef(limData(:,2,i),limData(:,3,i));
+    for t = 1:6
+        % Empty array to assign zeros to legend before all R and P is
+        % calculated
+        R = zeros(1,6);
+        P = zeros(1,6);
+        
+        % Get attribute names (For legend)
+        [sTitle,tTitle] = getAttributes(sa,t);
+        
+        % Use Function
+        [rFun(:,:,i,t),p(:,:,i,t)] = corrcoef(a(:,i),b(:,t));
+        R(t) = round(rFun(1,2,i,t),3);
+        P(t) = round(p(1,2,i,t),3);
+
+        % Calculate manualy
+        x = squeeze(a(:,i));
+        y = squeeze(b(:,t));
+        
+        % Calculate correlation coefficient for each SA
+        n = 15;
+        r_temp = (n*(sum(x.*y)) - (sum(x)*sum(y)))/(sqrt((n*(sum(x.^2)) - (sum(x))^2)*(n*(sum(y.^2))-(sum(y))^2)));
+        r(i,t) = round(r_temp,2);
+
+        coeffs = polyfit(x,y,1);
+        % Create vector with linearly distributed points
+        fittedX(i,t,:) = linspace(min(x),max(x),200);
+        % Get Y values of polynomial at value X (spatialAtt)
+        fittedY(i,t,:) = polyval(coeffs,fittedX(i,t,:));
+
+        % Scale between centre values are aligned
+        plotA = squeeze(fittedX(i,t,:));
+        plotB = squeeze(fittedY(i,t,:));
+%        plotA = plotA - plotA(100);
+%        plotB = plotB - plotB(100);
+        
+        % Plot line of best fit
+        subplot(2,2,i), h(t) = plot(plotA,plotB);
+        % Add Legend for line
+        legtextTEMP = {...
+        sprintf('Full: r=%.2f, p=%.3f',R(1),P(1)),...
+        sprintf('Bright: r=%.2f, p=%.3f',R(2),P(2)),...
+        sprintf('Flat: r=%.2f, p=%.3f',R(3),P(3)),...
+        sprintf('Rich: r=%.2f, p=%.3f',R(4),P(4)),...
+        sprintf('Realistic: r=%.2f, p=%.3f',R(5),P(5)),...
+        sprintf('Loud: r=%.2f, p=%.3f',R(6),P(6))};
     
-    % Calculate manualy
-    x = squeeze(limData(:,2,i));
-    y = squeeze(limData(:,3,i));
-    % Calculate correlation coefficient for each SA
-    n = 15;
-    r(i) = (n*(sum(x.*y)) - (sum(x)*sum(y)))/(sqrt((n*(sum(x.^2)) - (sum(x))^2)*(n*(sum(y.^2))-(sum(y))^2)));
-    r(i) = round(r(i),2);
+        textLegend{legIndex} = legtextTEMP{t};
+        legIndex = legIndex +1;
+        hold on
+        
+        % Indicate lines with low P-Value
+        if P(t) < 0.1
+            set(h(t),'LineStyle','--','Color',colors{cIndex});
+            subplot(2,2,i),plot(x,y,markers{cIndex},'Color',colors{cIndex});
+            % Add extra legend for new data
+            textLegend{legIndex} = strcat('',tTitle,' Data');
+            disp(sprintf('[Debug]: R(%i): %.3f P(%i): %.3f testLegend{%i}: %s',i,R(t),t,P(t),legIndex,textLegend{legIndex}));
+            cIndex = cIndex + 1;
+            legIndex = legIndex + 1;
+        end
+        grid on
+    end
     
-    coeffs = polyfit(x,y,1);
-    % Create vector with linearly distributed points
-    fittedX(i,:) = linspace(min(x),max(x),200);
-    % Get Y values of polynomial at value X (spatialAtt)
-    fittedY(i,:) = polyval(coeffs,fittedX(i,:));
+    legIndex = 1;
+    title(titles{i});
     
-    t = i;
-    subplot(4,1,1), plot(fittedX(t,:),fittedY(t,:));
-    hold on
-    subplot(4,1,1), plot(fittedX(t,:),fittedY(t,:));
+    leg = legend(textLegend);
+    set(leg,'location','best');
+    cIndex = 1;
 end
-grid on
-legend('Loc','SoS','Ext','Env');
+
 %%
 clf;
 t = 4;

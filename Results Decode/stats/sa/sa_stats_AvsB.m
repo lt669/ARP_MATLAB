@@ -13,8 +13,6 @@ A_q_av = squeeze(sum(A_q,2)/19);
 % Participants
 A_p = sum(A,1)/8;
 
-A_
-
 % Position B (participants per mic)
 
 % All data
@@ -55,6 +53,13 @@ AvB(1:19,1) = A_p;
 AvB(20:38) = nan;
 AvB(1:38,2) = B_p;
 
+
+%%
+close all
+fit = 'normal';
+h1 = histfit(A_q_av,[],fit);
+hold on
+h2 = histfit(B_q_av,[],fit);
 
 %% Plot distribution for each question
 close all

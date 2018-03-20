@@ -6,34 +6,35 @@
 A_u = cell2mat(hash_xlRaw(:,3:6,2:20));
 % Mic data avereaged across SA
 A = squeeze(sum(A_u,2)/4);
+Amiclist = squeeze(sum(A,2)/19);
 % Create long list of all participant results for A and B
 % par = 38, q = 4, mics = 7 Total = 1064
 %Alist = zeros(1,812);
-Alist = A_u(:);
 % B Data
 B_u = permute(cell2mat(sortedArray(:,:,2:5)),[1 3 2]);
-Blist = B_u(:);
+B = squeeze(sum(B_u,2)/4);
+Bmiclist = squeeze(sum(B,2)/38);
 
 % Test the variance
-vA = var(Alist);
-vB = var(Blist);
+vA = var(Amiclist);
+vB = var(Bmiclist);
 
 % Test for a normal distribution
-adA = adtest(Alist);
-adB = adtest(Blist);
+adA = adtest(Amiclist);
+adB = adtest(Bmiclist);
 
-vt = vartest(Blist,vA);
+vt = vartest(Bmiclist,vA);
 
 % Statistical Significants
-[h,p,ci,stats] = ttest2(Alist,Blist,'vartype','unequal');
+[h,p,ci,stats] = ttest2(Amiclist,Bmiclist,'vartype','unequal');
 
 %% Plot distribution for each question
 close all
 
-fit = 'kernel';
-h1 = histfit(Alist,[],fit);
+fit = 'normal';
+h1 = histfit(Amiclist,[],fit);
 hold on
-h2 = histfit(Blist,[],fit);
+h2 = histfit(Bmiclist,[],fit);
 xlabel('Spatial Attribute Score');
 ylabel('No. of Participants Answered');
 title(sprintf('Distribution of SA scores for Pos B microphones SA:'));

@@ -9,8 +9,6 @@ A_q = squeeze(sum(cell2mat(hash_xlRaw(:,3:6,2:20)),1)/8);
 % Participants
 A_p = sum(A,1)/8;
 
-
-
 % Position B (participants per mic)
 % All data
 B_u = permute(cell2mat(sortedArray(:,:,2:5)),[1 3 2]);
@@ -19,7 +17,6 @@ B_q = squeeze(sum(cell2mat(sortedArray(:,:,2:5)),1)/7);
 B_q = B_q';
 % Participants
 B_p = squeeze(sum(B,1)/7);
-
 
 % Stack SA question on top of each other to creat two vectors for comparison
 A_q_av = squeeze(sum(A_q,2)/19);

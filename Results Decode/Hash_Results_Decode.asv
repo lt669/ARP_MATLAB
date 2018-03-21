@@ -20,9 +20,10 @@ Lewis Thresh 26/02/2018
 
 for mic = 1:8
     for q = 1:4
-        hash_spatAttAvg(mic,q) = sum(cell2mat(hash_xlRaw(mic,q+2,2:20)))/19;
+        hash_spatAttAvg(mic,q) = sum(cell2mat(hash_xlRaw(mic,q+2,2:20)))/20;
     end
 end
+hash_spatAttAvg = squeeze(sum)
 
 
 %==========----------| Avereage Spatial Attributes Plot

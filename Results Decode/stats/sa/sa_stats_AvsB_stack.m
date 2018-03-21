@@ -30,7 +30,7 @@ vt = vartest(Blist,vA);
 %% Plot distribution for each question
 close all
 
-fit = 'normal';
+fit = 'kernel';
 h1 = histfit(Alist,[],fit);
 hold on
 h2 = histfit(Blist,[],fit);

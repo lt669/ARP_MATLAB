@@ -24,7 +24,7 @@ for q = 1:4
 end
 
 
-title('Average Spatial Attribute Scores Across Microphone Configurations For Each Questions (ALL)');
+title('Average Spatial Attribute Scores Across Microphone Configurations');
 xlabel('Spatial Attribute Questions');
 ylabel('Average Score');
 
@@ -35,3 +35,9 @@ ylim([5 8.5]);
 grid on;
 %leg = legend('Spots (B)','OCT (B)', 'PCMA (B)', 'AMBEO (B)', 'IRT Cross (B)', 'Hamasaki Cube (B)', 'ST450 (B)','Spots (A)','Eigen (A)','ESMA (A)','ORTF (A)','ST450 (A)','IRT (C)','Hamasaki (C)','ST450(C)');
 %set(leg,'location','best');
+
+%% Calculating averages
+
+c = sum(spatAttAvgMic_ALL(13:15,2))/3
+a = sum(spatAttAvgMic_ALL(10:12,2))/3
+

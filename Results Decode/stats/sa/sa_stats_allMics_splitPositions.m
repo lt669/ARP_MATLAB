@@ -6,7 +6,7 @@
 
 %{
     GROUP = MICROPHONE
-    THEREFORE, REARANGE SA MATRIX TO HAVE MICROPHONES IN COLUMS
+    THEREFORE, REARANGE SA MATRIX TO HAVE MICROPHONES IN COLUMNS
 %}
 
 % Rearrange the order of hash_xlRaw matrix
@@ -60,15 +60,17 @@ h2 = histfit(x1(:,1,2),[],'kernel');%delete(h2(1));
 
 %%
 fit = 'kernel';
-close all
-h1 = histfit(x1(:,1,2),[],fit);
+sa = 2;
+clf;
+%close all
+h1 = histfit(x1(:,1,sa),[],fit);
 hold on
-h2 = histfit(x1(:,2,2),[],fit);
-h3 = histfit(x1(:,3,2),[],fit);
-h4 = histfit(x1(:,4,2),[],fit);
-h5 = histfit(x1(:,5,2),[],fit);
-h6 = histfit(x1(:,6,2),[],fit);
-h7 = histfit(x1(:,7,2),[],fit);
+h2 = histfit(x1(:,2,sa),[],fit);
+h3 = histfit(x1(:,3,sa),[],fit);
+h4 = histfit(x1(:,4,sa),[],fit);
+h5 = histfit(x1(:,5,sa),[],fit);
+h6 = histfit(x1(:,6,sa),[],fit);
+h7 = histfit(x1(:,7,sa),[],fit);
 
 xlabel('Spatial Attribute Score');
 ylabel('No. of Participants Answered');

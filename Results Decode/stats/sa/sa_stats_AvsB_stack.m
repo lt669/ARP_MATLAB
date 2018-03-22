@@ -36,8 +36,11 @@ hold on
 h2 = histfit(Blist,[],fit);
 xlabel('Spatial Attribute Score');
 ylabel('No. of Participants Answered');
-title(sprintf('Distribution of SA scores for A vs B. All participant and mic scored stacked'));
+title(sprintf('Distribution of Spatial Attribute scores for Viewing Positions A & B'));
 
+% Crete vector for unified legend
+hAll = [h1(2);h2(2)];
+legend(hAll,'Position A','Position B');
 set(h1(2),'color','r'); delete(h1(1));
 set(h2(2),'color','g'); delete(h2(1));
 

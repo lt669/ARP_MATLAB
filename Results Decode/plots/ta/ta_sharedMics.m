@@ -37,7 +37,7 @@ b = bar(ta_AB');
 %applyhatch_plusC(x,'/-x.\+','rkbkmk',[],500);
 a = 1;
 set(b,'FaceColor',[a a a]);
-title(sprintf('Timbral Attributes Assigned to Each Microphone Configuration as A Percentage of Participants'));
+title(sprintf('Timbral Attributes Assigned to Each Microphone Configuration as a Percentage of Participants'));
 name = {'Full','Bright','Flat','Rich', 'Realistic', 'Loud'};
 set(gca,'xticklabel',name)
 

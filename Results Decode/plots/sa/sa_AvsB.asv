@@ -30,8 +30,8 @@ diff = [(b1A - b2A);(b1B - b2B)]
 % Plot error bars first
 offset = 0.15;
 xVec = 1:4;
-plot(xVec - offset,[b1A;b2A],'+','color','k', 'linewidth',2, 'MarkerSize',10);
-plot(xVec + offset,[b1B;b2B],'+','color','k', 'linewidth',2, 'MarkerSize',10);
+plot(xVec - offset,[b1A;b2A],'x','color','k');
+plot(xVec + offset,[b1B;b2B],'x','color','k');
 
 title('Average Spatial Attribute Scores For Position A & B with averaged mic score');
 xlabel('Spatial Attribute Questions');
@@ -40,5 +40,5 @@ name = {'Locatedness','Sense of Space','Externalisation', 'Envelopment'};
 set(gca,'xticklabel',name);
 set(gca,'ytick',5:0.25:8.5);
 ylim([5 8.5]);
-leg = legend('Position A','Position B','Error Markers');
+leg = legend('Position A','Position B');
 set(leg,'location','best');

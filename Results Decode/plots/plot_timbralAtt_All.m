@@ -14,5 +14,3 @@ run('ta_A.m');
 run('ta_all.m');
 %%
 run('ta_sharedMics.m');
-%%
-run('ta_box.m');

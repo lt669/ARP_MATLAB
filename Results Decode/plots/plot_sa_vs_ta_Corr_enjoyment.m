@@ -135,6 +135,12 @@ for i = 1:4
     cIndex = 1;
 end
 
+a = axes;
+t1 = title('Global Title');
+a.Visible = 'off'; % set(a,'Visible','off');
+t1.Visible = 'on'; % set(t1,'Visible','on');
+%set(get(gca,'title'),'Position',[5.5 0.4 1.00011])
+
 %% Plot just Envelopment
 clf;
 i = 4;

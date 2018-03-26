@@ -116,11 +116,17 @@ for i = 1:4
     
     legIndex = 1;
     title(titles{i});
-    
+    xlabel('Spatial Attribute Score');
+    ylabel('Timbral Attribute Score (%)');
     leg = legend(textLegend);
     set(leg,'location','best');
     cIndex = 1;
 end
+
+a = axes;
+t1 = title(sprintf('Line of Best fit for Spatial Attribute Scores and Timbral Attribute Scores \n \n \n'));
+a.Visible = 'off'; % set(a,'Visible','off');
+t1.Visible = 'on'; % set(t1,'Visible','on');
 
 %% Plot just Envelopment
 clf;
@@ -188,7 +194,8 @@ end
     
 legIndex = 1;
 title(strcat('Correlation between Timbral Attributes and','{ }',titles{i},''));
-
+xlabel('Spatial Attribute Score');
+ylabel('Timbral Attribute Score (%)');
 leg = legend(textLegend);
 set(leg,'location','best');
 cIndex = 1;

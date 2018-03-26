@@ -1,3 +1,8 @@
+clear;
+clc;
+run('Results_Decode.m');
+run('Spatial_Attributes.m');
+run('Hash_Results_Decode.m');
 % sortedArray(mic,Par,9)
 %| Calculate average enjoyment rating across participants
 for mic = 1:7
@@ -8,6 +13,9 @@ end
 
 x = spatialAttAvgMic;
 y = e;
+
+% Using function for r and p calues
+[rFun,pFun] = corrcoef(x,y);
 
 % Correlation Coefficient
 n = 7;
@@ -37,6 +45,6 @@ ylim = [6.8 8];
 xlim = [6.6 7.8];
 grid on;
 
-xlabel(sprintf('Average Enjoyment Score, P = %0.2f',r));
+xlabel(sprintf('Average Enjoyment Score, r = %0.2f, p = %0.2f',rFun(1,2),pFun(1,2)));
 ylabel('Average Spatial Attribut Score');
 title('Graph Showing Correlation Between Average Spatial Attribute Score and Enjoyment');

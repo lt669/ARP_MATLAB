@@ -22,6 +22,7 @@ for mic = 1:8
     for q = 1:4
         hash_spatAttAvg(mic,q) = sum(cell2mat(hash_xlRaw(mic,q+2,2:20)))/19;
     end
+    hash_spatAttAvgMic(mic) = sum(hash_spatAttAvg(mic,:)/4);
 end
 
 

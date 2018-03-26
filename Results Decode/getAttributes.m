@@ -24,5 +24,7 @@ function [sa,ta] = getAttributes(x, y)
             ta = 'Realistic';
         case 6
             ta = 'Loud';
+        case 7
+            ta = 'Enjoyment';
     end
 end
